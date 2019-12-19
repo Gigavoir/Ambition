@@ -61,8 +61,8 @@ def teamsEnabled():
 
 #Character selection
 def charSelect(y):
-  print("Roles: "+Fore.BLUE+"Tank"+Fore.WHITE+", "+Fore.GREEN+"Healer"+Fore.WHITE+", "+Fore.RED+"Damage")
-  print("Available characters:\n(1) "+Fore.BLUE+"Alcath\n"+Fore.WHITE+"(2)"+Fore.RED+" Viola\n"+Fore.WHITE+"(3)"+Fore.RED+" Kade\n"+Fore.WHITE+"(4)"+Fore.GREEN+" Victoire\n"+Fore.WHITE+"(5)"+Fore.RED+" Roslyn\n"+Fore.WHITE+"(6)"+Fore.GREEN+" Skylar")
+  print("Roles: "+Fore.BLUE+"Tank"+Style.RESET_ALL+", "+Fore.GREEN+"Healer"+Style.RESET_ALL+", "+Fore.RED+"Damage")
+  print("Available characters:\n(1) "+Fore.BLUE+"Alcath\n"+Style.RESET_ALL+"(2)"+Fore.RED+" Viola\n"+Style.RESET_ALL+"(3)"+Fore.RED+" Kade\n"+Style.RESET_ALL+"(4)"+Fore.GREEN+" Victoire\n"+Style.RESET_ALL+"(5)"+Fore.RED+" Roslyn\n"+Style.RESET_ALL+"(6)"+Fore.GREEN+" Skylar")
   chars = []
   for x in range(y):
     s = 0
