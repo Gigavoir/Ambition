@@ -1,7 +1,5 @@
 import random
-from colorama import Fore
-from colorama import Style
-from colorama import init
+from colorama import init, Fore, Back, Style
 init(autoreset=True)
 
 #Character classes
@@ -9,6 +7,9 @@ class Warrior:
   def __init__(self, p, t):
     self.player = p 
     self.team = t
+    self.mana = 10
+    self.health = 0
+    self.armor = 16
   def attack(self, players, chars, names):
     tar = -1
     print("[P"+str(self.player+1)+"] Select a target for "+Fore.RED+"Attack: ")
@@ -26,6 +27,10 @@ class Warrior:
       else:
         print("You can't target yourself with this.")
         tar = -1
+  def charge(self, players, chars, names):
+    if (self.mana - 10) >= 0:
+      self.mana = self.mana -10
+      print("Casted "+Fore.YELLOW+"Charge"+Style.RESET_ALL+".")
 
 #Number of players
 def numPlayers():
@@ -60,11 +65,18 @@ def teamsEnabled():
 #Name selection
 def nameSelect(y):
   s = 0
+  a = False
   names = []
   for x in range(y):
-    s = str(input("Enter name for Player "+str(x+1)+": "))
-    s = s.capitalize()
-    names.append(s)
+    a = False
+    while a == False:
+      s = str(input("Enter name for Player "+str(x+1)+": "))
+      s = s.capitalize()
+      if s in names:
+        print("Name already taken. Enter a new name.")
+      else:
+        names.append(s)
+        a = True
   return(names)
     
 
@@ -110,6 +122,7 @@ def teamSelect(y, c):
 
 
 #Display setup info
+print(Fore.YELLOW+"-=[AMBITION AUTOMATED v1.0]=-")
 players = numPlayers()
 if players > 2:
   teams = teamsEnabled()
@@ -123,7 +136,7 @@ print("Number of players: "+str(players))
 print("Teams: "+str(teams))
 
 chars[0].attack(players, chars, names)
-chars[1].attack(players, chars, names)
+chars[1].charge(players, chars, names)
 chars[2].attack(players, chars, names)
 chars[3].attack(players, chars, names)
 chars[4].attack(players, chars, names)
