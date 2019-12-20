@@ -76,21 +76,21 @@ def charSelect(y, n):
   for x in range(y):
     s = 0
     while s < 1 or s > 5:
-      s = int(input("Select character for "+str(n[x])+": "))
+      s = int(input("Select class for "+str(n[x])+": "))
       if s == 1:
-        chars.append("Warrior")
+        chars.append(Warrior(x, -1))
         print("Selected Warrior.")
       elif s == 2:
-        chars.append("Mage")
+        chars.append(Mage(x, -1))
         print("Selected Mage.")
       elif s == 3:
-        chars.append("Rogue")
+        chars.append(Rogue(x, -1))
         print("Selected Rogue")
       elif s == 4:
-        chars.append("Cleric")
+        chars.append(Cleric(x, -1))
         print("Selected Cleric.")
       elif s == 5:
-        chars.append("Ranger")
+        chars.append(Ranger(x, -1))
         print("Selected Ranger.")
       else:
         print("Invalid selection.")
@@ -121,10 +121,12 @@ if teams == True:
   playerTeams = teamSelect(players, chars)
 print("Number of players: "+str(players))
 print("Teams: "+str(teams))
-p1 = Warrior(0, -1)
-p2 = Warrior(1, -1)
-p1.attack(players, chars, names)
-p2.attack(players, chars, names)
+
+chars[0].attack(players, chars, names)
+chars[1].attack(players, chars, names)
+chars[2].attack(players, chars, names)
+chars[3].attack(players, chars, names)
+chars[4].attack(players, chars, names)
 
 if teams == False:
   print("Character selections:\n"+str(chars))
