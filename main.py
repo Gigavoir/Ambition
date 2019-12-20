@@ -5,7 +5,7 @@ from colorama import init
 init(autoreset=True)
 
 #Character classes
-class Alcath:
+class Warrior:
   def __init__(self, p, t):
     self.player = p 
     self.team = t
@@ -62,30 +62,27 @@ def teamsEnabled():
 #Character selection
 def charSelect(y):
   print("Roles: "+Fore.BLUE+"Tank"+Style.RESET_ALL+", "+Fore.GREEN+"Healer"+Style.RESET_ALL+", "+Fore.RED+"Damage")
-  print("Available characters:\n(1) "+Fore.BLUE+"Alcath\n"+Style.RESET_ALL+"(2)"+Fore.RED+" Viola\n"+Style.RESET_ALL+"(3)"+Fore.RED+" Kade\n"+Style.RESET_ALL+"(4)"+Fore.GREEN+" Victoire\n"+Style.RESET_ALL+"(5)"+Fore.RED+" Roslyn\n"+Style.RESET_ALL+"(6)"+Fore.GREEN+" Skylar")
+  print("Available classes:\n(1) "+Fore.BLUE+"Warrior\n"+Style.RESET_ALL+"(2)"+Fore.RED+" Mage\n"+Style.RESET_ALL+"(3)"+Fore.RED+" Rogue\n"+Style.RESET_ALL+"(4)"+Fore.GREEN+" Cleric\n"+Style.RESET_ALL+"(5)"+Fore.RED+" Ranger")
   chars = []
   for x in range(y):
     s = 0
-    while s < 1 or s > 6:
+    while s < 1 or s > 5:
       s = int(input("Select character for Player "+str(x+1)+": "))
       if s == 1:
-        chars.append("Alcath")
-        print("Selected Alcath.")
+        chars.append("Warrior")
+        print("Selected Warrior.")
       elif s == 2:
-        chars.append("Viola")
-        print("Selected Viola.")
+        chars.append("Mage")
+        print("Selected Mage.")
       elif s == 3:
-        chars.append("Kade")
-        print("Selected Kade")
+        chars.append("Rogue")
+        print("Selected Rogue")
       elif s == 4:
-        chars.append("Victoire")
-        print("Selected Kade.")
+        chars.append("Cleric")
+        print("Selected Cleric.")
       elif s == 5:
-        chars.append("Roslyn")
-        print("Selected Roslyn.")
-      elif s == 6:
-        chars.append("Skylar")
-        print("Selected Skylar.")
+        chars.append("Ranger")
+        print("Selected Ranger.")
       else:
         print("Invalid selection.")
     #print(x)
@@ -113,8 +110,8 @@ if teams == True:
   playerTeams = teamSelect(players, chars)
 print("Number of players: "+str(players))
 print("Teams: "+str(teams))
-p1 = Alcath(0, -1)
-p2 = Alcath(1, -1)
+p1 = Warrior(0, -1)
+p2 = Warrior(1, -1)
 p1.attack(players, chars)
 p2.attack(players, chars)
 
