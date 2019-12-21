@@ -7,7 +7,7 @@ init(autoreset=True)
 #Character classes
 class Warrior:
   def __init__(self, p, t):
-    self.player = p 
+    self.player = p
     self.team = t
   def attack(self, players, chars):
     tar = -1
@@ -26,8 +26,12 @@ class Warrior:
       else:
         print("You can't target yourself with this.")
         tar = -1
-    
-
+  def charge(self, players, chars, names):
+    if (self.mana - 10) >= 0:
+      self.mana = self.mana -10
+      print("Casted "+Fore.YELLOW+"Charge"+Style.RESET_ALL+".")
+    else:
+      print("Not enough mana for that spell.")
 
 #Number of players
 def numPlayers():
@@ -121,6 +125,3 @@ elif teams == True:
   print("Character and team selections:\n"+str(teamRed)+"\n"+str(teamBlue))
 else:
   print("Something went very wrong. Consider restarting the program.")
-
-
-
