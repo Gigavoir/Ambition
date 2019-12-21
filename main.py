@@ -31,6 +31,8 @@ class Warrior:
     if (self.mana - 10) >= 0:
       self.mana = self.mana -10
       print("Casted "+Fore.YELLOW+"Charge"+Style.RESET_ALL+".")
+    else:
+      print("Not enough mana for that spell.")
 
 #Number of players
 def numPlayers():
