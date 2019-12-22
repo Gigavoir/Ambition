@@ -1,20 +1,21 @@
 import random
-from colorama import Fore
-from colorama import Style
-from colorama import init
+from colorama import init, Fore, Back, Style
 init(autoreset=True)
 
 #Character classes
 class Warrior:
   def __init__(self, p, t):
-    self.player = p
+    self.player = p 
     self.team = t
-  def attack(self, players, chars):
+    self.mana = 10
+    self.health = 0
+    self.armor = 16
+  def attack(self, players, chars, names):
     tar = -1
-    print("[P"+str(self.player+1)+"] Select a target for "+Fore.RED+"Attack: ")
+    print("[P"+str(self.player+1)+"] Select a target for "+Fore.RED+"Attack"+Style.RESET_ALL+": ")
     for x in range(players):
       if x != self.player:
-        print("("+str(x+1)+") "+str(chars[x]))
+        print("("+str(x+1)+") "+str(names[x]))
     while tar < 0 or tar > players:
       tar = int(input("Target: "))
       tar = tar-1
@@ -22,16 +23,78 @@ class Warrior:
         print("That's not a valid target.")
         tar = -1
       elif tar != self.player:
-        print("Attacked "+str(chars[tar])+".")
+        print("Attacked "+str(names[tar])+".")
       else:
         print("You can't target yourself with this.")
         tar = -1
   def charge(self, players, chars, names):
-    if (self.mana - 10) >= 0:
-      self.mana = self.mana -10
-      print("Casted "+Fore.YELLOW+"Charge"+Style.RESET_ALL+".")
-    else:
-      print("Not enough mana for that spell.")
+    self.mana = self.mana-10
+    print("Casted "+Fore.YELLOW+"Charge"+Style.RESET_ALL+".")
+  def taunt(self, players, chars, names):
+    tar = -1
+    print("[P"+str(self.player+1)+"] Select a target for "+Fore.BLUE+"Taunt"+Style.RESET_ALL+": ")
+    for x in range(players):
+      if x != self.player:
+        print("("+str(x+1)+") "+str(names[x]))
+    while tar < 0 or tar > players:
+      tar = int(input("Target: "))
+      tar = tar-1
+      if tar < 0 or tar > players-1:
+        print("That's not a valid target.")
+        tar = -1
+      elif tar != self.player:
+        print("Taunted "+str(names[tar])+".")
+      else:
+        print("You can't target yourself with this.")
+        tar = -1
+    self.mana = self.mana-15
+
+class Mage:
+  def __init__(self, p, t):
+    self.player = p
+    self.team = t
+    self.health = 50
+    self.mana = 0
+    self.armor = 10
+  def attack(self, players, chars, names):
+    tar = -1
+    print("[P"+str(self.player+1)+"] Select a target for "+Fore.RED+"Attack"+Style.RESET_ALL+": ")
+    for x in range(players):
+      if x != self.player:
+        print("("+str(x+1)+") "+str(names[x]))
+    while tar < 0 or tar > players:
+      tar = int(input("Target: "))
+      tar = tar-1
+      if tar < 0 or tar > players-1:
+        print("That's not a valid target.")
+        tar = -1
+      elif tar != self.player:
+        print("Attacked "+str(names[tar])+".")
+      else:
+        print("You can't target yourself with this.")
+        tar = -1
+  def frostbolt(self, players, chars, names):
+    tar = -1
+    print("[P"+str(self.player+1)+"] Select a target for "+Fore.RED+"Frostbolt"+Style.RESET_ALL+": ")
+    for x in range(players):
+      if x != self.player:
+        print("("+str(x+1)+") "+str(names[x]))
+    while tar < 0 or tar > players:
+      tar = int(input("Target: "))
+      tar = tar-1
+      if tar < 0 or tar > players-1:
+        print("That's not a valid target.")
+        tar = -1
+      elif tar != self.player:
+        print("Attacked "+str(names[tar])+" with "+Fore.RED+"Frostbolt"+Style.RESET_ALL+".")
+      else:
+        print("You can't target yourself with this.")
+        tar = -1
+    self.mana = self.mana - 20
+  def fireball(self, players, chars, names):
+    self.mana = self.mana-45
+    print("Casted "+Fore.RED+"Fireball"+Style.RESET_ALL+".")
+
 
 #Number of players
 def numPlayers():
@@ -63,34 +126,53 @@ def teamsEnabled():
       else:
         print("Error. Please enter Y or N.")
 
+#Name selection
+def nameSelect(y):
+  s = 0
+  a = False
+  names = []
+  for x in range(y):
+    a = False
+    while a == False:
+      s = str(input("Enter name for Player "+str(x+1)+": "))
+      s = s.capitalize()
+      if s in names:
+        print("Name already taken. Enter a new name.")
+      else:
+        names.append(s)
+        a = True
+  return(names)
+    
+
 #Character selection
-def charSelect(y):
+def charSelect(y, n):
   print("Roles: "+Fore.BLUE+"Tank"+Style.RESET_ALL+", "+Fore.GREEN+"Healer"+Style.RESET_ALL+", "+Fore.RED+"Damage")
   print("Available classes:\n(1) "+Fore.BLUE+"Warrior\n"+Style.RESET_ALL+"(2)"+Fore.RED+" Mage\n"+Style.RESET_ALL+"(3)"+Fore.RED+" Rogue\n"+Style.RESET_ALL+"(4)"+Fore.GREEN+" Cleric\n"+Style.RESET_ALL+"(5)"+Fore.RED+" Ranger")
   chars = []
   for x in range(y):
     s = 0
     while s < 1 or s > 5:
-      s = int(input("Select character for Player "+str(x+1)+": "))
+      s = int(input("Select class for "+str(n[x])+": "))
       if s == 1:
-        chars.append("Warrior")
+        chars.append(Warrior(x, -1))
         print("Selected Warrior.")
       elif s == 2:
-        chars.append("Mage")
+        chars.append(Mage(x, -1))
         print("Selected Mage.")
       elif s == 3:
-        chars.append("Rogue")
+        chars.append(Rogue(x, -1))
         print("Selected Rogue")
       elif s == 4:
-        chars.append("Cleric")
+        chars.append(Cleric(x, -1))
         print("Selected Cleric.")
       elif s == 5:
-        chars.append("Ranger")
+        chars.append(Ranger(x, -1))
         print("Selected Ranger.")
       else:
         print("Invalid selection.")
     #print(x)
   return(chars)
+
 
 #Team selection
 def teamSelect(y, c):
@@ -104,20 +186,24 @@ def teamSelect(y, c):
 
 
 #Display setup info
+print(Fore.YELLOW+"-=[AMBITION AUTOMATED v1.0]=-")
 players = numPlayers()
 if players > 2:
   teams = teamsEnabled()
 else:
   teams = False
-chars = charSelect(players)
+names = nameSelect(players)
+chars = charSelect(players, names)
 if teams == True:
   playerTeams = teamSelect(players, chars)
 print("Number of players: "+str(players))
 print("Teams: "+str(teams))
-p1 = Warrior(0, -1)
-p2 = Warrior(1, -1)
-p1.attack(players, chars)
-p2.attack(players, chars)
+
+chars[0].attack(players, chars, names)
+chars[1].charge(players, chars, names)
+chars[2].taunt(players, chars, names)
+chars[3].frostbolt(players, chars, names)
+chars[4].fireball(players, chars, names)
 
 if teams == False:
   print("Character selections:\n"+str(chars))
@@ -125,3 +211,6 @@ elif teams == True:
   print("Character and team selections:\n"+str(teamRed)+"\n"+str(teamBlue))
 else:
   print("Something went very wrong. Consider restarting the program.")
+
+
+
