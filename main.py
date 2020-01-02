@@ -7,9 +7,9 @@ class Warrior:
   def __init__(self, p, t):
     self.player = p 
     self.team = t
-    self.mana = 10
+    self.mana = 0
     self.health = 0
-    self.armor = 16
+    self.armor = 10
   def attack(self, players, chars, names):
     tar = -1
     print("[P"+str(self.player+1)+"] Select a target for "+Fore.RED+"Attack"+Style.RESET_ALL+": ")
@@ -55,7 +55,7 @@ class Mage:
     self.team = t
     self.health = 50
     self.mana = 0
-    self.armor = 10
+    self.armor = 5
   def attack(self, players, chars, names):
     tar = -1
     print("[P"+str(self.player+1)+"] Select a target for "+Fore.RED+"Attack"+Style.RESET_ALL+": ")
@@ -94,6 +94,48 @@ class Mage:
   def fireball(self, players, chars, names):
     self.mana = self.mana-45
     print("Casted "+Fore.RED+"Fireball"+Style.RESET_ALL+".")
+
+class Rogue:
+  def __init__(self, p, t):
+    self.player = p
+    self.team = t
+    self.health = 50
+    self.mana = 0
+    self.armor = 8
+  def attack(self, players, chars, names):
+    tar = -1
+    print("[P"+str(self.player+1)+"] Select a target for "+Fore.RED+"Attack"+Style.RESET_ALL+": ")
+    for x in range(players):
+      if x != self.player:
+        print("("+str(x+1)+") "+str(names[x]))
+    while tar < 0 or tar > players:
+      tar = int(input("Target: "))
+      tar = tar-1
+      if tar < 0 or tar > players-1:
+        print("That's not a valid target.")
+        tar = -1
+      elif tar != self.player:
+        print("Attacked "+str(names[tar])+".")
+      else:
+        print("You can't target yourself with this.")
+        tar = -1
+  def poison(self, players, chars, names):
+    tar = -1
+    print("[P"+str(self.player+1)+"] Select a target for "+Fore.RED+"Poison"+Style.RESET_ALL+": ")
+    for x in range(players):
+      if x != self.player:
+        print("("+str(x+1)+") "+str(names[x]))
+    while tar < 0 or tar > players:
+      tar = int(input("Target: "))
+      tar = tar-1
+      if tar < 0 or tar > players-1:
+        print("That's not a valid target.")
+        tar = -1
+      elif tar != self.player:
+        print("Poisoned "+str(names[tar])+".")
+      else:
+        print("You can't target yourself with this.")
+        tar = -1
 
 
 #Number of players
